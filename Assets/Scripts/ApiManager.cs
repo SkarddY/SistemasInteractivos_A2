@@ -37,7 +37,7 @@ public class ApiManager : MonoBehaviour
     [SerializeField] private string baseURL = "https://sid-restapi.herokuapp.com";
 
     [SerializeField] private GameObject loginScreenPanel, mainScreenPanel;
-    [SerializeField] UnityEvent loginPanelActive, mainPanelActive;
+    [SerializeField] UnityEvent onLoginPanel, onMainPanel;
 
     [SerializeField] private TMP_Text[] userOrder;
     [SerializeField] private TMP_Text userID;
@@ -48,14 +48,18 @@ public class ApiManager : MonoBehaviour
     public string Username { get; set; }
     public string Token { get; set; } private string token;
 
+    private void Awake() {
+        onLoginPanel.Invoke();
+    }
+
     public void Start() {
         List<User> userList = new List<User>();
         List<User> dUserList = userList.OrderByDescending(user => user.data.score).ToList<User>();
         if (string.IsNullOrEmpty(Token)) {
-            loginPanelActive.Invoke();
+            onLoginPanel.Invoke();
         }
         else {
-            mainPanelActive.Invoke(); token = Token;
+            onMainPanel.Invoke(); token = Token;
             StartCoroutine(GetUser());
         }
     }
@@ -85,7 +89,7 @@ public class ApiManager : MonoBehaviour
                 userID.text = jsonData.usuario.username; StartCoroutine(ScoreUpdate());
             }
             else {
-                loginPanelActive.Invoke();
+                onLoginPanel.Invoke();
                 string message = "Status :" + www.responseCode;
                 message += "\ncontent-type:" + www.GetResponseHeader("content-type");
                 message += "\nError :" + www.error;
@@ -139,7 +143,7 @@ public class ApiManager : MonoBehaviour
 
                 PlayerPrefs.SetString("token", Token); PlayerPrefs.SetString("username", Username);
 
-                mainPanelActive.Invoke();
+                onMainPanel.Invoke();
 
                 StartCoroutine(ScoreUpdate());
                 userID.text = jsonData.usuario.username;
@@ -193,7 +197,7 @@ public class ApiManager : MonoBehaviour
         www.SetRequestHeader("Content-Type", contentType);
         yield return www.SendWebRequest();
         if (www.isNetworkError) {
-            loginPanelActive.Invoke();
+            onLoginPanel.Invoke();
             Debug.Log("NETWORK ERROR:" + www.error);
         }
         else {
@@ -208,6 +212,9 @@ public class ApiManager : MonoBehaviour
                 message += "\nError :" + www.error; Debug.Log(message);
             }
         }
+    }
+    public void OnGoBackButton() {
+        onLoginPanel.Invoke();
     }
     public void OnSubmitButton() {
         User user = new User();
