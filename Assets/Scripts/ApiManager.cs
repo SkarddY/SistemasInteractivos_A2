@@ -48,10 +48,6 @@ public class ApiManager : MonoBehaviour
     public string Username { get; set; }
     public string Token { get; set; } private string token;
 
-    private void Awake() {
-        onLoginPanel.Invoke();
-    }
-
     public void Start() {
         List<User> userList = new List<User>();
         List<User> dUserList = userList.OrderByDescending(user => user.data.score).ToList<User>();
