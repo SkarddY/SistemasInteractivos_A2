@@ -59,13 +59,13 @@ public class ApiManager : MonoBehaviour
             StartCoroutine(GetUser());
         }
     }
-    public void Register() {
+    public void OnRegisterButton() {
         User user = new User();
         user.username = GameObject.Find("UsernameField").GetComponent<TMP_InputField>().text;
         user.password = GameObject.Find("PasswordField").GetComponent<TMP_InputField>().text;
         string jsonData = JsonUtility.ToJson(user); StartCoroutine(cRegister(jsonData));
     }
-    public void LogIn() {
+    public void OnLoginButton() {
         User user = new User();
         user.username = GameObject.Find("UsernameField").GetComponent<TMP_InputField>().text;
         user.password = GameObject.Find("PasswordField").GetComponent<TMP_InputField>().text;

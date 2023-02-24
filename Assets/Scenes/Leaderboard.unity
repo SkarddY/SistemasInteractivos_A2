@@ -1783,7 +1783,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 284905577}
         m_TargetAssemblyTypeName: ApiManager, Assembly-CSharp
-        m_MethodName: LogIn
+        m_MethodName: OnLoginButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3229,7 +3229,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 284905577}
         m_TargetAssemblyTypeName: ApiManager, Assembly-CSharp
-        m_MethodName: Register
+        m_MethodName: OnRegisterButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
